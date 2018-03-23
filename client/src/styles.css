@@ -98,3 +98,7 @@ p, h1, h2 {
         opacity: 0;
       }
 }
+
+.clickable {
+ cursor: pointer;
+}

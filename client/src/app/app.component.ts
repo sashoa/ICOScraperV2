@@ -10,13 +10,22 @@ import {Ico} from "../../../shared/Ico.model";
 })
 export class AppComponent {
   icos: Observable<Ico[]>;
-  lazyMode = true;
+  updating = false;
+
   constructor(private icoDataService: IcoDataService) {
-    this.icos = icoDataService.getIcos(this.lazyMode)
+    this.icos = icoDataService.getIcos()
   }
 
-  toggleAppMode() {
-    this.lazyMode = !this.lazyMode;
-    this.icos = this.icoDataService.getIcos(this.lazyMode)
+  update() {
+    this.updating = true;
+    this.icoDataService.update().subscribe(res => {
+      this.updating = false;
+      if (res.success) {
+        this.icos = this.icoDataService.getIcos()
+      } else {
+        console.error('Failed to update icos');
+      }
+    });
   }
+
 }

@@ -1,3 +1,12 @@
 .ico-box {
   margin-bottom: 16px;
 }
+
+.info {
+  text-align: center;
+  font-size: 24px;
+}
+
+div > p {
+  padding-bottom: 36px;
+}

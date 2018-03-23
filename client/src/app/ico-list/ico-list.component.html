@@ -1,5 +1,7 @@
-<div *ngIf="(icos | async) as _icos; else loading">
-  <div class="ico-box" *ngFor="let ico of _icos">
+<div *ngIf="(icos | async) as icosData; else loading">
+  <p class="info" *ngIf="icosData.icos.length">Last updated {{icosData.updatedAt | amTimeAgo}}</p>
+  <p class="info" *ngIf="!icosData.icos.length">There are no ICOs in repository. Please Update.</p>
+  <div class="ico-box" *ngFor="let ico of icosData.icos">
     <app-ico [ico]="ico" [lazyMode]="lazyMode"></app-ico>
   </div>
 </div>

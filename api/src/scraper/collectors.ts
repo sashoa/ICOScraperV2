@@ -6,13 +6,14 @@ export function collectFromListPage($: CheerioStatic): Ico[] {
     let icos: Ico[] = [];
     $('.j-item').each(function(i, item) {
         const detailsToken = $(item).find('.j-link').attr('href');
-        let logoUrl = $(item).find('.j-img').first().attr('srcset');
+        let logoUrl = $(item).find('.j-img').first().attr('src');
+        logoUrl = logoUrl || $(item).find('.j-img').first().attr('srcset');
+        logoUrl = logoUrl.split(' ')[0];
         const name = $(item).find('.j-title').text();
         const shortDescription = $(item).find('.j-anounce p').text();
         const startDate = $(item).find('.j-start-date .table-companies__item-date').text();
         const endDate = $(item).find('.j-end-date .table-companies__item-date').text();
 
-        logoUrl = logoUrl.split(' ')[0];
         const ico: Ico = {
             name,
             logoUrl,
