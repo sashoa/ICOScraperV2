@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {IcoDataService} from "./services/ico/ico-data.service";
 import {Observable} from "rxjs/Observable";
 import {Ico} from "../../../shared/Ico.model";
+import "rxjs/add/observable/of";
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ export class AppComponent {
   updating = false;
 
   constructor(private icoDataService: IcoDataService) {
-    this.icos = icoDataService.getIcos()
+    this.getIcos()
   }
 
   update() {
@@ -21,11 +22,16 @@ export class AppComponent {
     this.icoDataService.update().subscribe(res => {
       this.updating = false;
       if (res.success) {
-        this.icos = this.icoDataService.getIcos()
+        this.getIcos();
       } else {
-        console.error('Failed to update icos');
+        this.icos = Observable.of(null);
       }
+    }, (err) => {
+      this.icos = Observable.of(null);
     });
   }
 
+  getIcos() {
+    this.icos = this.icoDataService.getIcos();
+  }
 }
